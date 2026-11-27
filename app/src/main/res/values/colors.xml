@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="medicore_blue_primary">#FF0878D1</color>
+    <color name="medicore_blue_navy">#FF123B63</color>
+    <color name="medicore_blue_accent">#FF0284C7</color>
+    <color name="medicore_blue_soft">#FFE0F2FE</color>
+    <color name="medicore_bg_blue_white">#FFF3F6FA</color>
+    <color name="medicore_border_blue_white">#FFDCE5EE</color>
+    <color name="medicore_text_navy">#FF1E293B</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

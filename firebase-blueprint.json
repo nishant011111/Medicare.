@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MediCore Firebase Architecture Blueprint",
+  "description": "Firestore Enterprise schema for MediCore multi-hospital management platform",
+  "collections": {
+    "users": {
+      "description": "User profiles indexed by UID",
+      "fields": {
+        "uid": { "type": "string", "required": true },
+        "email": { "type": "string", "required": true },
+        "displayName": { "type": "string", "required": false },
+        "role": { "type": "string", "required": true },
+        "activeHospitalId": { "type": "string", "required": false },
+        "createdAt": { "type": "timestamp", "required": true },
+        "updatedAt": { "type": "timestamp", "required": true }
+      }
+    },
+    "hospitals": {
+      "description": "Hospital tenant metadata & directory listings",
+      "fields": {
+        "directoryCode": { "type": "string", "required": true },
+        "name": { "type": "string", "required": true },
+        "city": { "type": "string", "required": true },
+        "address": { "type": "string", "required": true },
+        "pincode": { "type": "string", "required": false },
+        "primaryPhone": { "type": "string", "required": false },
+        "email": { "type": "string", "required": false },
+        "website": { "type": "string", "required": false },
+        "verificationStatus": { "type": "string", "required": true },
+        "isActiveTenant": { "type": "boolean", "required": true },
+        "createdAt": { "type": "timestamp", "required": true }
+      }
+    },
+    "patients": {
+      "description": "Patient profiles and clinical identity",
+      "fields": {
+        "id": { "type": "string", "required": true },
+        "globalPatientId": { "type": "string", "required": true },
+        "hospitalId": { "type": "string", "required": true },
+        "fullName": { "type": "string", "required": true },
+        "dateOfBirth": { "type": "string", "required": true },
+        "gender": { "type": "string", "required": true },
+        "bloodGroup": { "type": "string", "required": true },
+        "phone": { "type": "string", "required": true },
+        "createdAt": { "type": "timestamp", "required": true }
+      }
+    },
+    "appointments": {
+      "description": "OPD and department consultation slots",
+      "fields": {
+        "id": { "type": "string", "required": true },
+        "bookingNumber": { "type": "string", "required": true },
+        "hospitalId": { "type": "string", "required": true },
+        "patientName": { "type": "string", "required": true },
+        "doctorName": { "type": "string", "required": true },
+        "department": { "type": "string", "required": true },
+        "appointmentDate": { "type": "string", "required": true },
+        "slotTime": { "type": "string", "required": true },
+        "status": { "type": "string", "required": true },
+        "createdAt": { "type": "timestamp", "required": true }
+      }
+    },
+    "invoices": {
+      "description": "Financial service billing invoices stored in integer paise",
+      "fields": {
+        "id": { "type": "string", "required": true },
+        "invoiceNumber": { "type": "string", "required": true },
+        "hospitalId": { "type": "string", "required": true },
+        "patientName": { "type": "string", "required": true },
+        "serviceCategory": { "type": "string", "required": true },
+        "totalAmountPaise": { "type": "number", "required": true },
+        "paidAmountPaise": { "type": "number", "required": true },
+        "status": { "type": "string", "required": true },
+        "createdAt": { "type": "timestamp", "required": true }
+      }
+    },
+    "ai_clinical_drafts": {
+      "description": "Doctor-governed Gemini clinical note drafts",
+      "fields": {
+        "id": { "type": "string", "required": true },
+        "patientName": { "type": "string", "required": true },
+        "promptSummary": { "type": "string", "required": true },
+        "generatedSoapNote": { "type": "string", "required": true },
+        "status": { "type": "string", "required": true },
+        "createdAt": { "type": "timestamp", "required": true }
+      }
+    }
+  }
+}

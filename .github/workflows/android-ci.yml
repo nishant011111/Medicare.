@@ -1,0 +1,33 @@
+name: MediCore Android CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, staging]
+    paths:
+      - "app/**"
+      - "gradle/**"
+      - "build.gradle.kts"
+  pull_request:
+    branches: [main]
+
+jobs:
+  android-build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Run Unit & Robolectric Tests
+        run: gradle :app:testDebugUnitTest
+
+      - name: Run Android Lint
+        run: gradle :app:lintDebug
+
+      - name: Assemble Debug APK
+        run: gradle :app:assembleDebug

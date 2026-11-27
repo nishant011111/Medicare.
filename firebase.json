@@ -1,0 +1,14 @@
+{
+  "firestore": {
+    "database": "ai-studio-android-medicore-62a2061b-c905-44fb-8cf9-ec060fe6dae3",
+    "rules": "firestore.rules"
+  },
+  "emulators": {
+    "auth": {
+      "port": 9099
+    },
+    "firestore": {
+      "port": 8085
+    }
+  }
+}

@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  medicore-api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./backend/.env.example
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - medicore-internal
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: medicore_db
+      POSTGRES_USER: medicore_app
+      POSTGRES_PASSWORD: CHANGE_ME_STRONG_PASSWORD
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medicore_app -d medicore_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # Not exposed to public internet
+    networks:
+      - medicore-internal
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    networks:
+      - medicore-internal
+
+volumes:
+  pgdata:
+
+networks:
+  medicore-internal:
+    driver: bridge

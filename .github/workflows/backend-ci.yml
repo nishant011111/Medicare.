@@ -1,0 +1,46 @@
+name: MediCore Backend CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, staging]
+    paths:
+      - "backend/**"
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Validate Prisma Schema
+        env:
+          DATABASE_URL: postgresql://postgres:password@localhost:5432/medicare?schema=public
+        run: npx prisma validate
+
+      - name: Generate Prisma Client
+        env:
+          DATABASE_URL: postgresql://postgres:password@localhost:5432/medicare?schema=public
+        run: npx prisma generate
+
+      - name: TypeScript Build Check
+        run: npm run build
+
+      - name: Run Unit & Integration Tests (Phases 2-9 & Ranchi Directory)
+        run: npm test
+
+      - name: Dependency Vulnerability Audit
+        run: npm audit --audit-level=high || true

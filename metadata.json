@@ -1,0 +1,6 @@
+{
+  "name": "MediCore",
+  "description": "MediCore – Multi-Hospital & Medical Management System for Patients, Doctors, Nurses, Receptionists, Pharmacists, Lab Techs, and Admins.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

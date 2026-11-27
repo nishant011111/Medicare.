@@ -1,0 +1,82 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Phase 2 Official MediCore Brand Design Tokens (Light Mode) */
+    --mc-primary-blue: #0866B2;
+    --mc-dark-navy: #102F4D;
+    --mc-secondary-teal: #11A6A0;
+    --mc-bg-light: #F4F7FB;
+    --mc-card-bg: #FFFFFF;
+    --mc-text-primary: #172B43;
+    --mc-text-secondary: #718096;
+    --mc-success: #16A36A;
+    --mc-warning: #E9A23B;
+    --mc-danger: #DC4C4C;
+  }
+
+  .dark {
+    /* Dark Mode Surfaces & Contrast Tokens */
+    --mc-bg-light: #0A1929;
+    --mc-card-bg: #10253E;
+    --mc-text-primary: #F1F5F9;
+    --mc-text-secondary: #94A3B8;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--mc-bg-light);
+    color: var(--mc-text-primary);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-mono, .tabular-nums {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Subtle MediCore Dashboard Background Watermark (Non-intrusive 4% Opacity) */
+.medicore-dashboard-watermark {
+  background-image: url('/assets/medicore-logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 0.04;
+  pointer-events: none;
+  user-select: none;
+  width: 240px;
+  height: 170px;
+}
+
+@media (min-width: 640px) {
+  .medicore-dashboard-watermark {
+    width: 360px;
+    height: 255px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .medicore-dashboard-watermark {
+    width: 480px;
+    height: 340px;
+  }
+}
+
+.medicore-dashboard-content .mc-surface-card {
+  background-color: #ffffff;
+}
+
+.dark .medicore-dashboard-content .mc-surface-card {
+  background-color: #10253e;
+}

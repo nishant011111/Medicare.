@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // User Profile Documents
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId);
+    }
+
+    // Hospitals directory - public read for directory, authenticated creation/update
+    match /hospitals/{hospitalId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Patients, Appointments, Invoices & Clinical records
+    match /patients/{patientId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    match /appointments/{appointmentId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    match /invoices/{invoiceId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    match /ai_clinical_drafts/{draftId} {
+      allow read, write: if isAuthenticated();
+    }
+  }
+}
